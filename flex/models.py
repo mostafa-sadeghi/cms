@@ -9,11 +9,13 @@ class Flexpage(Page):
     template = 'flex/flex_page.html'
     subtitle = models.CharField(max_length=100, blank=False, null=True)
     content = StreamField(
-        [('full_richtext', blocks.RichtextBlock()),
+        [
+         ('full_richtext', blocks.RichtextBlock()),
+         ('simple_richtext', blocks.SimpleRichtextBlock()),
          ('title_and_text', blocks.TitleAndTextBlock())
-         ],
-        null=True,
-        blank=True,
+        ],
+        null = True,
+        blank = True,
     )
 
     content_panels = Page.content_panels + [
