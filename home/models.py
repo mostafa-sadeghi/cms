@@ -1,9 +1,22 @@
 from django.db import models
-
-from wagtail.core.models import Page
+from modelcluster.fields import ParentalKey
+from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField
-from wagtail.admin.edit_handlers import FieldPanel, PageChooserPanel
+from wagtail.admin.edit_handlers import FieldPanel, PageChooserPanel, InlinePanel, MultiFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
+
+
+class HomePageCarouselImages(Orderable):
+    page = ParentalKey("home.HomePage", related_name="carousel_images")
+    carousel_image = models.ForeignKey("wagtailimages.Image",
+                                       null=True,
+                                       blank=True,
+                                       on_delete=models.SET_NULL,
+                                       related_name="+"
+                                       )
+    panels = [
+        ImageChooserPanel("carousel_image"),
+    ]
 
 
 class HomePage(Page):
@@ -24,10 +37,17 @@ class HomePage(Page):
                                    on_delete=models.SET_NULL,
                                    related_name='+')
     content_panels = Page.content_panels + [
-        FieldPanel("banner_title"),
-        FieldPanel("banner_subtitle"),
-        ImageChooserPanel("banner_image"),
-        PageChooserPanel("banner_cta")
+        MultiFieldPanel([
+
+            FieldPanel("banner_title"),
+            FieldPanel("banner_subtitle"),
+            ImageChooserPanel("banner_image"),
+            PageChooserPanel("banner_cta"),
+        ], heading="banner options"),
+        MultiFieldPanel([
+
+            InlinePanel("carousel_images", max_num=5, min_num=1, label="image")
+        ], heading="Carousel Image")
 
     ]
 
