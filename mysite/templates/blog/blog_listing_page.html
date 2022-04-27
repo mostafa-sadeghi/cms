@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load wagtailimages_tags %}
+{% block content %}
+<div class="container">
+    {% for post in posts %}
+    {% image post.blog_image max-250x250  as img %}
+    <div class="row">
+        <div class="col-sm-4">
+            <img src="{{img.url}}" alt="">
+        </div>
+        <div class="col-sm-8">
+            <a href="{{post.url}}">
+
+                {{post.custom_title}}
+            </a>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<br>
+{% endblock content %}
