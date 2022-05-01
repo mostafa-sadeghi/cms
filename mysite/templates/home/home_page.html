@@ -2,33 +2,29 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 {% block content %}
 
-{% image self.banner_image fill-900x400 as img %}
-
+{% image self.banner_image fill-400x400 as img %}
+{% if img %}
 <div class="jumbotron" style="background-image: url('{{ img.url }}'); background-size: contain; ">
     <h1 class="display-4">{{self.banner_title}}</h1>
     <p class="lead">{{self.banner_subtitle|richtext}}</p>
     {% if self.banner_cta %}
     <p class="lead">
-      <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+      {% comment %} <a class="btn btn-primary btn-lg" href="#" role="button"></a> {% endcomment %}
     </p>
     {% endif %}
 </div>
+{% endif %}
 
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
     {% for loop in self.carousel_images.all %}
-    {% image loop.carousel_image fill-900x400 as img %}
+    {% image loop.carousel_image max-400x400 as img %}
     <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
-      <img src="{{img.url}}" class="d-block w-100" alt="{{img.alt}}">
+      <img src="{{img.url}}" class="center" alt="{{img.alt}}" width=200 height =200>
     </div>
     {% endfor %}
-    <div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="...">
-    </div>
   </div>
+  {% if loop.carousel_image %}
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
@@ -37,9 +33,13 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
+  {% endif %}
 </div>
 
-site settings:
+{% comment %} site settings: {% endcomment %}
+{% if settings.site_settings.SocialMediaSettings|length > 0 %}
+{{settings.site_settings.SocialMediaSettings}}
 {{ settings.site_settings.SocialMediaSettings.facebook }}
+{% endif %}
 
 {% endblock %}

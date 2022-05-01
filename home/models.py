@@ -24,10 +24,10 @@ class HomePage(Page):
     # max_count = 1
     banner_title = models.CharField(max_length=100, blank=True, null=True)
     banner_subtitle = RichTextField(
-        features=["bold", "italic"], blank=False, null=True)
+        features=["bold", "italic"], blank=True, null=True)
     banner_image = models.ForeignKey("wagtailimages.Image",
                                      null=True,
-                                     blank=False,
+                                     blank=True,
                                      on_delete=models.SET_NULL,
                                      related_name='+'
                                      )

@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'sahel';
+    src: url('../static/fonts/sahel.ttf') format("opentype");
+  }
+
+* {
+    font-family: sahel;
+  }
+  

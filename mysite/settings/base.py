@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'site_settings',
     'subscribers',
     'blog',
+    "wagtail_localize",
+    "wagtail_localize.locales",
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -65,7 +67,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-
+    "django.middleware.locale.LocaleMiddleware",
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
@@ -136,7 +138,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+WAGTAIL_I18N_ENABLED = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -176,3 +178,7 @@ WAGTAILSEARCH_BACKENDS = {
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
+WAGTAIL_CONTENT_LANGUAGES = LANGUAGES = [
+    ("en", "English"),
+    ("fa", "Farsi"),
+]
